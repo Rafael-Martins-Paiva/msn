@@ -1,4 +1,4 @@
-package dev.msn.chatapp.websocket;
+package dev.oldschool.msn.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.*;
@@ -7,9 +7,15 @@ import org.springframework.web.socket.config.annotation.*;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    private final ChatWebSocketHandler chatWebSocketHandler; // Inject the handler
+
+    public WebSocketConfig(ChatWebSocketHandler chatWebSocketHandler) {
+        this.chatWebSocketHandler = chatWebSocketHandler;
+    }
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new ChatWebSocketHandler(), "/ws/chat")
+        registry.addHandler(chatWebSocketHandler, "/ws/chat/{roomId}") // Changed endpoint
                 .setAllowedOrigins("*");  
     }
 }

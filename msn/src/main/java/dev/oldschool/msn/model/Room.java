@@ -8,11 +8,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Mensagem {
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String autor;
-    private String conteudo;
-    private Long roomId; // New field to associate message with a room
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private RoomType type;
+
+    // For simplicity, creatorId for now. Can be linked to a User entity later.
+    private Long creatorId;
 }
